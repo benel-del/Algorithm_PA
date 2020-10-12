@@ -6,10 +6,10 @@ import java.io.*;
 // x좌표 사용 : o.
 // 경우의 수 확인
 
-// x의 좌표가 같은 경우 ???
+// + stack over flow 해결
+// + same point 해결
 
-
-// + stack over flow
+// => step2, step: complete(약 188.5ms). test step 1: must be solved.
 
 // DO NOT modify class point, function closest(), and function setPoints(point p[])!
 
@@ -37,7 +37,7 @@ public class closest{
 
 	// DIVDE & CONQUER
 	private double  boundary;
-	private double min;     // min distance
+	private double min = -1.0;     // min distance
 	private int inner;      // number of left point in boundary-min ~ boundary
 	   
 	public closest(){
@@ -58,7 +58,9 @@ public class closest{
 		//Input source code here...
 		
 		quickSort(0, pnt.length - 1);      // for divide left, right in divide&conquer
-        
+        if(min == 0)
+        	return 0;
+		
 		min = getDist(pnt[0], pnt[pnt.length - 1]);
 		divide(0, pnt.length - 1);
 
@@ -69,6 +71,8 @@ public class closest{
 	private void quickSort(int p, int r){
 		if(p < r){
 			int q = partition(p, r);
+			if(q == -1)
+				return;
 			quickSort(p, q - 1);
 			quickSort(q + 1, r);
 		}
@@ -78,6 +82,10 @@ public class closest{
 		i = p - 1;
 		for(j = p; j < r; j++){
 			if(pnt[j].x <= pivot){
+				if(i != -1 && pnt[j].x == pivot && pnt[j].y == pnt[i].y) {
+					min = 0;
+					return -1;
+				}
 				i++;
 				swap(i, j);
 			}
