@@ -1,3 +1,5 @@
+package pa2;
+
 import java.io.*;
 
 public class pa2 {
