@@ -6,6 +6,11 @@ import java.io.*;
 // x좌표 사용 : o.
 // 경우의 수 확인
 
+// x의 좌표가 같은 경우 ???
+
+
+// + stack over flow
+
 // DO NOT modify class point, function closest(), and function setPoints(point p[])!
 
 class point{
@@ -99,11 +104,15 @@ public class closest{
 				if(pnt[i].x <= boundary)
 					left++;
 			}
-			divide(p, p + left - 1);
-			divide(p + left, r);
+			
+			/* StackOverFlow */
+			if(p + left - 1 != r)
+				divide(p, p + left - 1);
+			if(p + left != p)
+				divide(p + left, r);
 			getSubMinDist(p, r, left);
 		}
-		else if(p + 1 == r){
+		else if(p + 1 == r){	// 2개 비교
 			min = Math.min(min, getDist(pnt[p], pnt[r]));
 		}
 	}       
@@ -111,7 +120,7 @@ public class closest{
 		System.out.println("p: "+ p + ", r: " + r + ", left: " + left);
 
 		inner = 0;
-		for(i = p + left - 1; i >= p && pnt[i].x > boundary - min; i--){      // boundary-min ~ boundary
+		for(i = p + left - 1; i >= p && pnt[i].x >= boundary - min; i--){      // boundary-min ~ boundary
 			inner++;
 		}
 		for(i = p + left; i <= r && pnt[i].x < boundary + min; i++){      // boundary ~ boundary+min
