@@ -4,7 +4,7 @@ import java.io.*;
 
 // boundary : 좌표 기준 O.
 // x좌표 사용 : o.
-// 뭐가 문제지.
+// 경우의 수 확인하기
 
 // DO NOT modify class point, function closest(), and function setPoints(point p[])!
 
@@ -102,6 +102,9 @@ public class closest{
 			divide(p, p + left - 1);
 			divide(p + left, r);
 			getSubMinDist(p, r, left);
+		}
+		else if(p + 1 == r){
+			min = Math.min(min, getDist(pnt[p], pnt[r]));
 		}
 	}       
 	private void getSubMinDist(int p, int r, int left){
