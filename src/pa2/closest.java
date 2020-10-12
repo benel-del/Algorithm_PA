@@ -50,7 +50,7 @@ public class closest{
 
 		quickSort(0, pnt.length - 1);      // for divide left, right in divide&conquer
         
-		min = 0;
+		min = getDist(pnt[0], pnt[pnt.length - 1]);
 		divide(0, pnt.length - 1);
 
 		return min;
@@ -86,10 +86,8 @@ public class closest{
 		pnt[b].y = temp.y;
 	}
 
-
 	// DIVIDE & CONQUER
 	private void divide(int p, int r){   // array, start position, end position
-		System.out.println("p: "+ p + ", r: " + r);
 		if(p + 1 < r){
 			int left = 0;
 			boundary = (pnt[p].x + pnt[r].x) / 2;
@@ -104,18 +102,15 @@ public class closest{
 	}
 	        
 	private void getSubMinDist(int p, int r, int left){
-		if(p + 1 == r){
-			min = Math.min(min, getDist(pnt[p], pnt[r]));
+		System.out.println("p: "+ p + ", r: " + r + ", left: " + left);
+
+		inner = 0;
+		for(i = p + left - 1; i >= p && pnt[i].x > boundary - min; i--){      // boundary-min ~ boundary
+			inner++;
 		}
-		else{
-			inner = 0;
-			for(i = p + left - 1; i >= p && pnt[p + i].x > boundary - min; i--){      // boundary-min ~ boundary
-				inner++;
-			}
-			for(i = p + left; i <= r && pnt[i].x < boundary + min; i++){      // boundary ~ boundary+min
-				for(j = p + left - 1, k = 0; k < inner; j--, k++){
-					min = Math.min(min, getDist(pnt[i], pnt[j]));
-				}
+		for(i = p + left; i <= r && pnt[i].x < boundary + min; i++){      // boundary ~ boundary+min
+			for(j = p + left - 1, k = 0; k < inner; j--, k++){
+				min = Math.min(min, getDist(pnt[i], pnt[j]));
 			}
 		}
 	}
