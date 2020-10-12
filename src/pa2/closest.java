@@ -2,6 +2,8 @@ package pa2;
 
 import java.io.*;
 
+// boundary : x 좌표 기준 => 실패
+
 // DO NOT modify class point, function closest(), and function setPoints(point p[])!
 
 class point{
