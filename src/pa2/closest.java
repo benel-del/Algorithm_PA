@@ -2,7 +2,9 @@ package pa2;
 
 import java.io.*;
 
-// boundary : x 좌표 기준 => 실패
+// boundary : 좌표 기준 O.
+// x좌표 사용 : o.
+// 뭐가 문제지.
 
 // DO NOT modify class point, function closest(), and function setPoints(point p[])!
 
@@ -30,7 +32,7 @@ public class closest{
 
 	// DIVDE & CONQUER
 	private double  boundary;
-	private double min;     // min distance
+	private double min, min2;     // min distance
 	private int inner;      // number of left point in boundary-min ~ boundary
 	   
 	public closest(){
@@ -49,13 +51,21 @@ public class closest{
 	}
 	public double getMinDist(){
 		//Input source code here...
-
+		
+		// x 기준
 		quickSort(0, pnt.length - 1);      // for divide left, right in divide&conquer
         
 		min = getDist(pnt[0], pnt[pnt.length - 1]);
 		divide(0, pnt.length - 1);
 
-		return min;
+		// y 기준
+		quickSort2(0, pnt.length - 1);      // for divide left, right in divide&conquer
+        
+		min2 = getDist(pnt[0], pnt[pnt.length - 1]);
+		divide2(0, pnt.length - 1);
+		
+		return Math.min(min, min2);
+		//return min;
     }
 	
 	// QUICKSORT
@@ -101,8 +111,7 @@ public class closest{
 			divide(p + left, r);
 			getSubMinDist(p, r, left);
 		}
-	}
-	        
+	}       
 	private void getSubMinDist(int p, int r, int left){
 		System.out.println("p: "+ p + ", r: " + r + ", left: " + left);
 
@@ -120,4 +129,54 @@ public class closest{
 	private double getDist(point a, point b){
 		return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 	}
+	
+	
+	private void quickSort2(int p, int r){
+		if(p < r){
+			int q = partition2(p, r);
+			quickSort(p, q - 1);
+			quickSort(q + 1, r);
+		}
+	}
+	private void getSubMinDist2(int p, int r, int left){
+		System.out.println("p: "+ p + ", r: " + r + ", left: " + left);
+
+		inner = 0;
+		for(i = p + left - 1; i >= p && pnt[i].y > boundary - min2; i--){      // boundary-min ~ boundary
+			inner++;
+		}
+		for(i = p + left; i <= r && pnt[i].y < boundary + min2; i++){      // boundary ~ boundary+min
+			for(j = p + left - 1, k = 0; k < inner; j--, k++){
+				min2 = Math.min(min2, getDist(pnt[i], pnt[j]));
+			}
+		}
+	}
+	private int partition2(int p, int r){
+		pivot = pnt[r].y;
+		i = p - 1;
+		for(j = p; j < r; j++){
+			if(pnt[j].y <= pivot){
+				i++;
+				swap(i, j);
+			}
+		}
+		swap(i + 1, r);
+
+		return i + 1;
+	}
+	private void divide2(int p, int r){   // array, start position, end position
+		if(p + 1 < r){
+			int left = 0;
+			boundary = (pnt[p].y + pnt[r].y) / 2;
+			for(i = p; i <= r; i++){
+				if(pnt[i].y <= boundary)
+					left++;
+			}
+			divide(p, p + left - 1);
+			divide(p + left, r);
+			getSubMinDist2(p, r, left);
+		}
+	}
+	
+	
 }
