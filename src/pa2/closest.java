@@ -53,7 +53,7 @@ public class closest{
 		divide(0, pnt.length - 1);
 
 		return min;
-}
+	}
 
 	// QUICKSORT
 	private void quickSort(int p, int r){
