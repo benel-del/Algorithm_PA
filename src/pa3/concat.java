@@ -6,6 +6,12 @@ public class concat{
         private pri[] pa;
 
 // Define additional variables or functions if you need...
+        private int n, k, max, min;
+        private int i, j;	// for statement
+        
+        /* counting sort */
+        private pri[] pb;	// sorting result
+        private int[] pc;	// 보조
 
         public concat(){
                 this.pa = null;
@@ -19,11 +25,43 @@ public class concat{
         }
 
         public String concatenate(){
-                String result;
+                String result = "";
 
                 // Insert source code here...
+                n = pa.length;
+                k = n/2;
+                
+                getMaxMin();	// for the range of pb[] in coungintSort
+                countingSort();
 
-                return result;
         }
+        
+        private void getMaxMin() {	//min 안 쓰면 지우기
+        	max = min = pa[k].pr;
+        	i = k + 1;
+        	while(i + 2 <= n) {
+        		if(pa[i].pr < pa[i+1].pr) {
+        			if(pa[i].pr < min)
+        				min = pa[i].pr;
+        			if(pa[i+1].pr > max)
+        				max = pa[i+1].pr;
+        		}
+        		else {
+        			if(pa[i].pr > max)
+        				max = pa[i].pr;
+        			if(pa[i+1].pr < min)
+        				min = pa[i+1].pr;
+        		}
+        		i += 2;
+        	}
+        	if((n - k) % 2 == 0) {	// # = even
+        		if(pa[n-1].pr < min)
+        			min = pa[n-1].pr;
+        		if(pa[n-1].pr > max)
+        			max = pa[n-1].pr;
+        	}
+        }     
 }
+// pa : pri[] 객체를 담은 배열
+// pa.pr, pa.word
 
