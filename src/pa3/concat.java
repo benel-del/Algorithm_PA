@@ -6,13 +6,12 @@ public class concat{
         private pri[] pa;
 
 // Define additional variables or functions if you need...
-        private int n, k, max, min;
-        private int i, j;	// for statement
+        private int n, k, max;
+        private int i;
         
         /* counting sort */
-        //private pri[] pb;	// sorting result
         private String[] pb;
-        private int[] pc;	// 
+        private int[] pc;
 
         public concat(){
                 this.pa = null;
@@ -32,20 +31,27 @@ public class concat{
                 n = pa.length;
                 k = n/2;
                 
-                getMaxMin();	// for the range of pb[] in coungintSort
+                //getMaxMin();	// for the range of pb[] in coungintSort
+                getMax();
                 countingSort();
                 
-                //result += pb[0].word;
-                result += pb[0];
-                for(i = 1; i < n; i++) {
-                	//result += " " + pb[i].word;
-                	result += " " + pb[i];
+                for(i = 0; i < n; i++) {
+                	result += pb[i] + " ";
                 }
 
                 return result;
         }
         
-        private void getMaxMin() {	//min 안 쓰면 지우기
+        private void getMax() {
+        	max = pa[0].pr;
+        	for(i = 1; i < n; i++) {
+        		if(pa[i].pr > max)
+        			max = pa[i].pr;
+        	}
+        }
+        
+        /*
+        private void getMaxMin() {
         	max = min = pa[0].pr;
         	i = 1;
         	while(i + 2 <= n) {
@@ -70,7 +76,7 @@ public class concat{
         			max = pa[n-1].pr;
         	}
         }
-        
+        */
         private void countingSort(){
         	pc = new int[max+1];
         	//pb = new pri[n];
