@@ -10,8 +10,9 @@ public class concat{
         private int i, j;	// for statement
         
         /* counting sort */
-        private pri[] pb;	// sorting result
-        private int[] pc;	// 보조
+        //private pri[] pb;	// sorting result
+        private String[] pb;
+        private int[] pc;	// 
 
         public concat(){
                 this.pa = null;
@@ -34,15 +35,19 @@ public class concat{
                 getMaxMin();	// for the range of pb[] in coungintSort
                 countingSort();
                 
-                for(i = 0; i < n - k; i++)
-                	result += pb[i].word;
+                //result += pb[0].word;
+                result += pb[0];
+                for(i = 1; i < n; i++) {
+                	//result += " " + pb[i].word;
+                	result += " " + pb[i];
+                }
 
                 return result;
         }
         
         private void getMaxMin() {	//min 안 쓰면 지우기
-        	max = min = pa[k].pr;
-        	i = k + 1;
+        	max = min = pa[0].pr;
+        	i = 1;
         	while(i + 2 <= n) {
         		if(pa[i].pr < pa[i+1].pr) {
         			if(pa[i].pr < min)
@@ -58,7 +63,7 @@ public class concat{
         		}
         		i += 2;
         	}
-        	if((n - k) % 2 == 0) {	// # = even
+        	if(n % 2 == 0) {	// # = even
         		if(pa[n-1].pr < min)
         			min = pa[n-1].pr;
         		if(pa[n-1].pr > max)
@@ -68,20 +73,25 @@ public class concat{
         
         private void countingSort(){
         	pc = new int[max+1];
-        	pb = new pri[n - k];
-        	for(i = 0; i <= max; i++)	// init pc
+        	//pb = new pri[n];
+        	pb = new String[n];
+        	for(i = 0; i <= max; i++)
         		pc[i] = 0;
-        	for(i = k; i < n; i++)
+        	for(i = 0; i < n; i++)
         		pc[pa[i].pr]++;
         	for(i = 1; i <= max; i++)
         		pc[i] += pc[i-1];
-        	for(i = n - k; n >= 0; i--) {
+        	for(i = n - 1; i >= k; i--) {
         		pc[pa[i].pr]--;
-        		pb[pc[pa[i].pr] - 1] = new pri(pa[i].pr, pa[i].word);
-        		//pb[pc[pa[i].pr]].pr = pa[i].pr;
-        		//pb[pc[pa[i].pr]].word = pa[i].word;
+        		//pb[pc[pa[i].pr]] = new pri(pa[i].pr, pa[i].word);
+        		pb[pc[pa[i].pr]] = new String(pa[i].word);
         	}
-        }    
+        	for(; i >= 0; i--) {
+        		pc[pa[i].pr]--;
+        		//pb[pc[pa[i].pr]] = new pri(pa[i].pr, "-");
+        		pb[pc[pa[i].pr]] = new String("-");
+        	}
+        }
 }
 // pa : pri[] 객체를 담은 배열
 // pa.pr, pa.word
