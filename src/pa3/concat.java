@@ -33,7 +33,11 @@ public class concat{
                 
                 getMaxMin();	// for the range of pb[] in coungintSort
                 countingSort();
+                
+                for(i = 0; i < n - k; i++)
+                	result += pb[i].word;
 
+                return result;
         }
         
         private void getMaxMin() {	//min 안 쓰면 지우기
@@ -60,7 +64,24 @@ public class concat{
         		if(pa[n-1].pr > max)
         			max = pa[n-1].pr;
         	}
-        }     
+        }
+        
+        private void countingSort(){
+        	pc = new int[max+1];
+        	pb = new pri[n - k];
+        	for(i = 0; i <= max; i++)	// init pc
+        		pc[i] = 0;
+        	for(i = k; i < n; i++)
+        		pc[pa[i].pr]++;
+        	for(i = 1; i <= max; i++)
+        		pc[i] += pc[i-1];
+        	for(i = n - k; n >= 0; i--) {
+        		pc[pa[i].pr]--;
+        		pb[pc[pa[i].pr] - 1] = new pri(pa[i].pr, pa[i].word);
+        		//pb[pc[pa[i].pr]].pr = pa[i].pr;
+        		//pb[pc[pa[i].pr]].word = pa[i].word;
+        	}
+        }    
 }
 // pa : pri[] 객체를 담은 배열
 // pa.pr, pa.word
