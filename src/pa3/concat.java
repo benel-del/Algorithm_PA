@@ -11,7 +11,6 @@ public class concat{
         
         /* counting sort */
         private String[] pb;
-        private int[] pc;
 
         public concat(){
                 this.pa = null;
@@ -30,8 +29,7 @@ public class concat{
                 // Insert source code here...
                 n = pa.length;
                 k = n/2;
-                
-                //getMaxMin();	// for the range of pb[] in coungintSort
+
                 getMax();
                 countingSort();
                 
@@ -50,36 +48,8 @@ public class concat{
         	}
         }
         
-        /*
-        private void getMaxMin() {
-        	max = min = pa[0].pr;
-        	i = 1;
-        	while(i + 2 <= n) {
-        		if(pa[i].pr < pa[i+1].pr) {
-        			if(pa[i].pr < min)
-        				min = pa[i].pr;
-        			if(pa[i+1].pr > max)
-        				max = pa[i+1].pr;
-        		}
-        		else {
-        			if(pa[i].pr > max)
-        				max = pa[i].pr;
-        			if(pa[i+1].pr < min)
-        				min = pa[i+1].pr;
-        		}
-        		i += 2;
-        	}
-        	if(n % 2 == 0) {	// # = even
-        		if(pa[n-1].pr < min)
-        			min = pa[n-1].pr;
-        		if(pa[n-1].pr > max)
-        			max = pa[n-1].pr;
-        	}
-        }
-        */
         private void countingSort(){
-        	pc = new int[max+1];
-        	//pb = new pri[n];
+        	int[] pc = new int[max+1];
         	pb = new String[n];
         	for(i = 0; i <= max; i++)
         		pc[i] = 0;
@@ -89,16 +59,11 @@ public class concat{
         		pc[i] += pc[i-1];
         	for(i = n - 1; i >= k; i--) {
         		pc[pa[i].pr]--;
-        		//pb[pc[pa[i].pr]] = new pri(pa[i].pr, pa[i].word);
         		pb[pc[pa[i].pr]] = new String(pa[i].word);
         	}
         	for(; i >= 0; i--) {
         		pc[pa[i].pr]--;
-        		//pb[pc[pa[i].pr]] = new pri(pa[i].pr, "-");
         		pb[pc[pa[i].pr]] = new String("-");
         	}
         }
 }
-// pa : pri[] 객체를 담은 배열
-// pa.pr, pa.word
-
