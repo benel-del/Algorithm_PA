@@ -26,7 +26,7 @@ public class concat{
 
     public String concatenate(){
         String result = "";
-        char[] arr;
+        //char[] arr = new char[];
 
         // Insert source code here...
         n = pa.length;
@@ -34,16 +34,26 @@ public class concat{
         getMax();	// for max
         countingSort();	// for STABLE sorting
         
-        ///*
-        StringBuffer buffer = new StringBuffer();	// for 'string + string'
-        for(i = 0; i < n; i++) {
-        	//result += pb[i] + " ";	// score: 5.6, time: 1.4s ~ 1.6s
+        
+        //StringBuffer buffer = new StringBuffer();	// for 'string + string'
+        result += pb[0];
+        for(i = 1; i < n; i++) {
+        	result += " " + pb[i];	// score: 5.6, time: 1.4s ~ 1.6s
         	//result = result.concat(pb[i] + " ");	// score: 5.6, time: 1.9 ~ 2.2 
-        	buffer.append(pb[i] + " ");	// score: 14ms ~ 0.16ms
+        	//buffer.append(pb[i] + " ");	// score: 14ms ~ 0.16ms
         	
         }
-        result = buffer.toString();
-        //*/
+        //result = buffer.toString();
+        
+        /*
+        int k = 0;
+        for(i = 0; i < n; i++) {
+        	for(int j = 0; j < pb[i].length(); j++) {
+        		arr[k] = pb[i].charAt(j);
+        	}
+        }
+        */
+        
         return result;
     }
     
