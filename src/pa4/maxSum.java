@@ -4,7 +4,6 @@ public class maxSum{
     private int []money;
 
 //Declare and define additional variables or functions here if you need...
-    int count = 1;
     public maxSum(int[] m){
 
             // DO NOT modify constructor
@@ -19,23 +18,27 @@ public class maxSum{
             int r = 0;
 
             // Insert source code here...
-            r = sum(money.length-1);
+            r = sum(money.length-1, 1);
             return r;
     }
     	
-    private int sum(int n) {
-    	int q = 0;
+    private int sum(int n, int count) {
     	if(n == 0) {
     		if(count < 3)
     			return money[n];
     		else
     			return 0;
     	}
+    	int q = sum(n-1, 1);
     	if(count < 3) {
-    		count++;
-    		q = sum(n-1) + money[n];
+    		if(n-1 == 0)
+    			if(count+1 < 3)
+    				q = Math.max(q, money[n-1] + money[n]);
+    			else
+    				q = Math.max(q,  money[n]);
+    		else
+    			q = Math.max(q, sum(n-1, count+1) + money[n]);
     	}
-    	count = 1;
-    	return Math.max(q, sum(n-1));
+    	return q;
     }
 }
