@@ -11,7 +11,7 @@ public class pa4{
                 for(i = 0; i < money.length; i++)
                 	System.out.print(money[i] + " ");
                 System.out.println("\nYour Answer = " + ms.max());
-                System.out.println("Answer = 53");
+                System.out.println("Answer = 58");
                 
                 ms = null;
                 money = null;
