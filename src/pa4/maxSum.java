@@ -28,15 +28,16 @@ public class maxSum{
     private int sum(int n, int count) {
     	if(n < 0)
     		return 0;
-    	if(n == 0)
-    		return money[0];
-    	
-    	int q = money[n];
+    	int q;
+    	if(count == 3)
+    		q = 0;
+    	else
+    		q = money[n];
 
-    	if(count < 2 && n > 0)
-    		q = Math.max(money[n] + sum(n-1, count+1), sum(n-1, 1));
-		for(i = 2; i <= n; i++) {
-			q = Math.max(q, sum(n-i, 1) + money[n]);
+    	if(n > 0) {
+    		if(count < 3)
+    			q += sum(n-1, count+1);
+        	q = Math.max(sum(n-1, 1), q);
     	}
 
     	return q;
