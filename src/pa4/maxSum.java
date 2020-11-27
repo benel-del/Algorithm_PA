@@ -2,6 +2,8 @@ package pa4;
 
 public class maxSum{
     private int []money;
+    int i;
+    int arr[][];
 
 //Declare and define additional variables or functions here if you need...
     public maxSum(int[] m){
@@ -15,30 +17,42 @@ public class maxSum{
     }
 
     public int max(){
-            int r = 0;
+        int r = 0;
 
-            // Insert source code here...
-            r = sum(money.length-1, 1);
-            return r;
-    }
+        r = money.length;
+        //r = 5;
+    	arr = new int[r][2];
+    	for(i = 0; i < r; i++)
+    		arr[i][0] = arr[i][1] = -1;
+    	r = Math.max(sum(r-1, 0, 0), sum(r-1, 1, 1));
+    	//r = sum(r-1, 1, 1);
     	
-    private int sum(int n, int count) {
+        return r;
+    }
+    
+    private int sum(int n, int count, int isUsed) {
+    	//System.out.println("sum(" + n + ", " + count + ", " + isUsed + ") : " + arr[n][isUsed]);
+    	int q = 0;
+		if(arr[n][isUsed] >= 0) {
+			return arr[n][isUsed];
+		}
     	if(n == 0) {
-    		if(count < 3)
-    			return money[n];
+    		if(isUsed == 1)
+    			q = money[0];
     		else
-    			return 0;
+    			q = 0;
     	}
-    	int q = sum(n-1, 1);
-    	if(count < 3) {
-    		if(n-1 == 0)
-    			if(count+1 < 3)
-    				q = Math.max(q, money[n-1] + money[n]);
-    			else
-    				q = Math.max(q,  money[n]);
-    		else
-    			q = Math.max(q, sum(n-1, count+1) + money[n]);
+    	else {
+    		if(isUsed == 1) {	// money[n] 사용
+    			if(count < 2)
+    				q = sum(n-1, count+1, 1) + money[n];	// money[n-1] 사용
+				q = Math.max(q, sum(n-1, 0, 0) + money[n]);	// money[n-1] 사용x
+    		}
+    		else {	// money[n] 사용x
+				q = Math.max(sum(n-1, 1, 1), sum(n-1, 0, 0));	// money[n-1] 사용x
+    		}
     	}
-    	return q;
+    	
+    	return arr[n][isUsed] = q;
     }
 }
