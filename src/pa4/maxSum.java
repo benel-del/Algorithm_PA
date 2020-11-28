@@ -34,23 +34,28 @@ public class maxSum{
     }
     
     private int sum(int n, int count) {
-    	int p = 0;
+    	int q;
     	if(count > 0)
-    		p = 1;
+    		q = value[1][n];
+    	else
+    		q = value[0][n];
     	
-    	if(count < 2 && value[p][n] >= 0) {
-    		return value[p][n];
+    	if(count < 2 && q >= 0) {
+    		return q;
     	}
     	
     	if(n > 0) {
-    		int q = sum(n-1, 0);
+    		q = sum(n-1, 0);
     		if(count < 2) {
     			int r;
     			if(q < (r = sum(n-1, count+1)))
     				q = r;
     		}
-    		value[p][n] = q + money[n] * p;
+    		if(count > 0)
+    			q = value[1][n] = q + money[n];
+    		else
+    			q = value[0][n] = q;
     	}
-    	return value[p][n];
+    	return q;
     }
 }
