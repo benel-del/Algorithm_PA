@@ -18,29 +18,15 @@ public class maxSum{
     public int max(){
         int r = 0;
 
-        r = money.length;
-        value = new int[2][r+1];
-
-    	for(int i = 0; i < r; i++) {
+        value = new int[2][money.length];
+    	for(int i = 1; i < money.length; i++) {
     		value[0][i] = value[1][i] = -1;
     	}
     	value[0][0] = 0;
     	value[1][0] = money[0];
-    	
-    	value[0][r] = sum(r-1, 0);
-
-    	for(int i = 0; i < r; i++) {
-    		value[0][i] = value[1][i] = -1;
-    	}
-    	value[0][0] = 0;
-    	value[1][0] = money[0];
-    	
-    	value[1][r] = sum(r-1, 1);
-
-
-        return Math.max(value[0][r], value[1][r]);
+ 
+        return r = Math.max(sum(money.length-1, 0), sum(money.length-1, 1));
     }
-    
     private int sum(int n, int count) {
     	int p = 0;
     	if(count > 0)
@@ -52,17 +38,10 @@ public class maxSum{
     	
     	if(n > 0) {
     		int q = sum(n-1, 0);
-    		int r = 0;
-    		
     		if(count < 2) {
-    			r = sum(n-1, count+1);
+    			q = Math.max(q, sum(n-1, count+1));
     		}
-    		if(q > r) {
-    			value[p][n] = q + money[n] * p;
-    		}
-    		else {
-    			value[p][n] = r + money[n] * p;
-    		}
+    		value[p][n] = q + money[n] * p;
     	}
     	return value[p][n];
     }
