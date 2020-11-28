@@ -17,15 +17,16 @@ public class maxSum{
 
     public int max(){
         int r = 0;
-
-        value = new int[2][money.length];
-    	for(int i = 1; i < money.length; i++) {
+        r = money.length;
+        value = new int[2][r];
+    	for(int i = 1; i < r; i++) {
     		value[0][i] = value[1][i] = -1;
     	}
     	value[0][0] = 0;
     	value[1][0] = money[0];
- 
-        return r = Math.max(sum(money.length-1, 0), sum(money.length-1, 1));
+
+    	r = Math.max(sum(r-1, 0), sum(r-1, 1));
+        return r;
     }
     private int sum(int n, int count) {
     	int p = 0;
