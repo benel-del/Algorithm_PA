@@ -2,8 +2,7 @@ package pa4;
 
 public class maxSum{
     private int []money;
-    int i;
-    int arr[][];
+    int value[][];
 
 //Declare and define additional variables or functions here if you need...
     public maxSum(int[] m){
@@ -20,39 +19,51 @@ public class maxSum{
         int r = 0;
 
         r = money.length;
-        //r = 5;
-    	arr = new int[r][2];
-    	for(i = 0; i < r; i++)
-    		arr[i][0] = arr[i][1] = -1;
-    	r = Math.max(sum(r-1, 0, 0), sum(r-1, 1, 1));
-    	//r = sum(r-1, 1, 1);
+        value = new int[2][r+1];
+
+    	for(int i = 0; i < r; i++) {
+    		value[0][i] = value[1][i] = -1;
+    	}
+    	value[0][0] = 0;
+    	value[1][0] = money[0];
     	
-        return r;
+    	value[0][r] = sum(r-1, 0);
+
+    	for(int i = 0; i < r; i++) {
+    		value[0][i] = value[1][i] = -1;
+    	}
+    	value[0][0] = 0;
+    	value[1][0] = money[0];
+    	
+    	value[1][r] = sum(r-1, 1);
+
+
+        return Math.max(value[0][r], value[1][r]);
     }
     
-    private int sum(int n, int count, int isUsed) {
-    	//System.out.println("sum(" + n + ", " + count + ", " + isUsed + ") : " + arr[n][isUsed]);
-    	int q = 0;
-		if(arr[n][isUsed] >= 0) {
-			return arr[n][isUsed];
-		}
-    	if(n == 0) {
-    		if(isUsed == 1)
-    			q = money[0];
-    		else
-    			q = 0;
-    	}
-    	else {
-    		if(isUsed == 1) {	// money[n] 사용
-    			if(count < 2)
-    				q = sum(n-1, count+1, 1) + money[n];	// money[n-1] 사용
-				q = Math.max(q, sum(n-1, 0, 0) + money[n]);	// money[n-1] 사용x
-    		}
-    		else {	// money[n] 사용x
-				q = Math.max(sum(n-1, 1, 1), sum(n-1, 0, 0));	// money[n-1] 사용x
-    		}
+    private int sum(int n, int count) {
+    	int p = 0;
+    	if(count > 0)
+    		p = 1;
+    	
+    	if(count < 2 && value[p][n] >= 0) {
+    		return value[p][n];
     	}
     	
-    	return arr[n][isUsed] = q;
+    	if(n > 0) {
+    		int q = sum(n-1, 0);
+    		int r = 0;
+    		
+    		if(count < 2) {
+    			r = sum(n-1, count+1);
+    		}
+    		if(q > r) {
+    			value[p][n] = q + money[n] * p;
+    		}
+    		else {
+    			value[p][n] = r + money[n] * p;
+    		}
+    	}
+    	return value[p][n];
     }
 }
