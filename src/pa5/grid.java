@@ -3,7 +3,7 @@ package pa5;
 public class grid{
     private int n;
     long result;
-
+    int arr[][][];
 //Declare more variables here if you need...
 
     public grid(int n){
@@ -11,7 +11,8 @@ public class grid{
     	this.result = 0;
     }
     long numOfWays(){
-    	int arr[][][] = new int[n+1][n+1][4];
+    	result = 0;
+    	arr = new int[n+1][n+1][4];
 		for(int x = 0; x <= n; x++) {
 			for(int y = 0; y <= n; y++) {
 				if(x == 0)
@@ -24,28 +25,40 @@ public class grid{
 					arr[x][y][2] = 1;
 			}
 		}
-		func2(arr, 0, 0);
+		func2(0, 0);
 		return result;
     }
 
 //Define more functions here if you need...
 
-    private void func2(int arr[][][], int x, int y) {
+    private void func2(int x, int y) {
     	if(x == n && y == n)
     		result ++;
     	else {
     		for(int i = 0; i < 4; i++) {
     			if(arr[x][y][i] == 0) { // 아직 안 감
     				arr[x][y][i] = 1;
-    				int arrB[][][] = arr.clone();
-    				if(i == 0)
-    					func2(arrB, x+1, y);
-    				else if(i == 1)
-    					func2(arrB, x-1, y);
-    				else if(i == 2)
-    					func2(arrB, x, y+1);
-    				else
-    					func2(arrB, x, y-1);
+    				if(i == 0) {
+    					arr[x+1][y][1] = 1;
+    					func2(x+1, y);
+    					arr[x+1][y][1] = 0;
+    				}
+    				else if(i == 1) {
+    					arr[x-1][y][0] = 1;
+    					func2(x-1, y);
+    					arr[x-1][y][0] = 0;
+    				}
+    				else if(i == 2) {
+    					arr[x][y+1][3] = 1;
+    					func2(x, y+1);
+    					arr[x][y+1][3] = 0;
+    				}
+    				else {
+    					arr[x][y-1][2] = 1;
+    					func2(x, y-1);
+    					arr[x][y-1][2] = 0;
+    				}
+    				arr[x][y][i] = 0;
     			}
     		}
     	}
