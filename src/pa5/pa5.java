@@ -12,7 +12,9 @@ public class pa5{
                 }
                 G = new grid(Integer.parseInt(args[0]));
                 */
-                G = new grid(2);
+                G = new grid(7);
+                //6: 5억 7578만 564 :: 56분32초~58분08초
+                //7: 59분 11초 ~ ...
                 System.out.println(G.numOfWays() + " patterns");
                 G = null;
         }
